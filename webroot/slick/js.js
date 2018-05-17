@@ -1,0 +1,1 @@
+jQuery('.sl').slick();
