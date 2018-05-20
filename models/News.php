@@ -224,7 +224,7 @@ public static function getNewsByCategory($categoryId = false) {
     /*
      * Виведення тегів новини
      */
-    public static function getTags($id) {
+    public static function getTagsByNews($id) {
         $db = Db::getConnection();
         $tagsList = [];
          $result = $db->query("SELECT tags.tag, tags.id, COUNT(news_tags.tagid) AS news_count".
@@ -239,21 +239,37 @@ public static function getNewsByCategory($categoryId = false) {
         }
         return $tagsList;
     }
-
+    /*
+        * Виведення всих тегів
+        */
+    public static function getTags() {
+        $db = Db::getConnection();
+        $tagsList = [];
+        $result = $db->query("SELECT news.id, news.title, news_tags.tagid, news_tags.newsid FROM news LEFT JOIN news_tags ON news.id = news_tags.newsid");
+        $i = 0;
+        while($row = $result->fetch()) {
+            $tagsList[$i]['tag'] = $row['tag'];
+            $tagsList[$i]['id'] = $row['id'];
+            $i++;
+        }
+        return $tagsList;
+    }
     public static function getNewsByTag($idTag) {
 
         $db = Db::getConnection();
 
         $newsTag = [];
-        $result = $db->query("SELECT news.id AS news_id, news.title AS news_title, tags.id  AS tag, news_tags.tagid FROM news JOIN news_tags JOIN tags ON tags.id ='$idTag'");
+        $result = $db->query("SELECT * FROM news LEFT JOIN news_tags ON news_tags.newsid = news.id WHERE news_tags.tagid = ". $idTag);
 
         $i = 0;
 
         while($row = $result->fetch()) {
 
-            $newsTag[$i]['id'] = $row['news_id'];
-            $newsTag[$i]['title'] = $row['news_title'];
-            $newsTag[$i]['tag'] = $row['tag'];
+            $newsTag[$i]['id'] = $row['id'];
+            $newsTag[$i]['cat_name'] = $row['cat_name'];
+            $newsTag[$i]['title'] = $row['title'];
+            $newsTag[$i]['content'] = $row['content'];
+            $newsTag[$i]['pubdate'] = $row['pubdate'];
             $i++;
         }
 
@@ -334,7 +350,7 @@ public static function getTotalNewsInCategory($category)
         $db = Db::getConnection();
 
         // Получение и возврат результатов
-        $result = $db->query('SELECT id, cat_name, author_id, title, content, tag_id FROM news ORDER BY id ASC');
+        $result = $db->query('SELECT id, cat_name, author_id, title, content, pubdate FROM news ORDER BY id ASC');
         $newsList = [];
         $i = 0;
         while ($row = $result->fetch()) {
@@ -342,7 +358,7 @@ public static function getTotalNewsInCategory($category)
             $newsList[$i]['cat_name'] = $row['cat_name'];
             $newsList[$i]['author_id'] = $row['author_id'];
             $newsList[$i]['title'] = $row['title'];
-            $newsList[$i]['tag_id'] = $row['tag_id'];
+            $newsList[$i]['pubdate'] = $row['pubdate'];
             $i++;
         }
         return $newsList;

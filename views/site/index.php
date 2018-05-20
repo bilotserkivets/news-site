@@ -7,26 +7,17 @@
            <!-- Blog Entries Column -->
 
     <div class="col-md-8">
+        <br/>
         <!-- Slider -->
-        <div class="sl__slide">
-           <img src="/webroot/upload/images/1.jpg" alt="Картинка слайда 1" class="sl__image">
-            <div class="sl__text">
-                <h3 class="sl__zag">Заголовок слайду</h3>
-            </div>
-        </div>
         <div class="sl">
+            <?php foreach($lastNews as $news): ?>
         <div class="sl__slide">
-            <img src="/webroot/upload/images/1.jpg" alt="Картинка слайда 1" class="sl__image">
+           <img src="/webroot/upload/images/<?php echo $news['id'];?>.jpg" alt="Картинка слайда 1" class="sl__image">
             <div class="sl__text">
-                <h3 class="sl__zag">Заголовок слайду</h3>
+                <h3 class="sl__zag"><?php echo $news['title'];?></h3>
             </div>
         </div>
-        <div class="sl__slide">
-            <img src="/webroot/upload/images/1.jpg" alt="Картинка слайда 1" class="sl__image">
-            <div class="sl__text">
-                <h3 class="sl__zag">Заголовок слайду</h3>
-            </div>
-        </div>
+        <?php endforeach;?>
         </div>
 
                 <h1 class="my-4">Page Heading

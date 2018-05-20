@@ -11,6 +11,7 @@ class NewsController
         $newsList = News::getNewsPolitika();
        $categories = Category::getCategoriesList();
        $author = User::getUsers();
+
       require_once (ROOT.'/views/site/index.php');
       return true;
     }
@@ -42,14 +43,13 @@ class NewsController
        $db = Db::getConnection();
 
        $tags = [];
-       //$tags = News::getTags($id);
 
        $oneNews = News::getNewsListById($category, $id);
 
         $categories = Category::getCategoriesList();
 
             $comments = Comment::getComments($id);
-            $tags = News::getTags($id);
+            $tags = News::getTagsByNews($id);
             $author = User::getUsers();
 
         // Обработка формы

@@ -26,9 +26,7 @@ public function actionIndex() {
     $lastNews = News::getLastNews();
 
     $topAuthors = Comment::getTopAutors();
-
-
-
+    $lastNews = News::getLastNews();
 
     require_once (ROOT.'/views/site/index.php');
 

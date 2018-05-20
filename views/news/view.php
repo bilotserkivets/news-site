@@ -6,18 +6,40 @@
 
         <!-- Blog Entries Column -->
         <div class="col-md-8">
-            <h1 class="my-4"><?php echo $oneNews['title'];?>
-                <small></small>
-            </h1>
-            <p><img src="/webroot/upload/images/<?php echo $oneNews['id'];?>.jpg" hspace="10" vspace="10" alt="#" width="300" ></p>
+            <!-- Title -->
+            <h1 class="mt-4"><?php echo $oneNews['title'];?></h1>
+
+            <!-- Author -->
+            <p class="lead">
+                by
+                <a href="#">Автор новини</a>
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p>Опубліковано <?php echo $oneNews['pubdate']?></p>
+
+            <hr>
+
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="/webroot/upload/images/<?php echo $oneNews['id'];?>.jpg" alt="">
+
+            <hr>
+
+            <!-- Post Content -->
             <p align="justify"><?php echo $oneNews['content'];?></p>
 
             <?php echo "Теги: ";?>
             <?php foreach($tags as $tagItam): ?>
                 <a class="badge badge-success" href="/news/<?php echo $tagItam['id'];?>"><?php echo $tagItam['tag'];?></a>
+
             <?php endforeach; ?>
 
             <hr>
+
+            <h6>Залишати коментар можуть лише авторизовані користувачі!</h6>
+            <br/>
             <?php if(isset($_SESSION['user'])):?>
             <!-- Comments Form -->
             <div class="card my-4">
