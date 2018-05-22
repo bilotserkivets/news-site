@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">На сайт</a>
+                    <a class="nav-link" href="/" target="_blank">На сайт</a>
                 </li>
 
             </ul>

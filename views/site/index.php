@@ -12,10 +12,11 @@
         <div class="sl">
             <?php foreach($lastNews as $news): ?>
         <div class="sl__slide">
-           <img src="/webroot/upload/images/<?php echo $news['id'];?>.jpg" alt="Картинка слайда 1" class="sl__image">
+           <a href="#"><img src="/webroot/upload/images/<?php echo $news['id'];?>.jpg" alt="Картинка слайда" class="sl__image">
             <div class="sl__text">
-                <h3 class="sl__zag"><?php echo $news['title'];?></h3>
+                <h5 class="sl__zag"><?php echo $news['title'];?></h5>
             </div>
+               </a>
         </div>
         <?php endforeach;?>
         </div>

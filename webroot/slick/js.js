@@ -1,1 +1,4 @@
-jQuery('.sl').slick();
+$('.sl').slick({
+    autoplay: true,
+
+});
