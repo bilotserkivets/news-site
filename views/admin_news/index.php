@@ -14,6 +14,7 @@
     <hr>
         <th>ID новини</th>
         <th>Заголовок новини</th>
+        <th>Категорія</th>
         <th>Автор</th>
         <th>Дата публікації</th>
         <th>Теги</th>
@@ -24,6 +25,7 @@
         <tr>
             <td><?php echo $news['id']; ?></td>
             <td><?php echo $news['title']; ?></td>
+            <td><?php echo $news['cat_title']; ?></td>
             <?php
             $user = false;
             foreach($author as $name) {

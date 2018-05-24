@@ -43,7 +43,9 @@ class AdminNewsController extends AdminBase
             $options['title'] = $_POST['title'];
             $options['content'] = $_POST['content'];
             $options['category_id'] = $_POST['category_id'];
+            $options['author_id'] = $_SESSION['user'];
 
+            $tag = $_POST['tag'];
 
             // Флаг ошибок в форме
             $errors = false;
@@ -57,7 +59,9 @@ class AdminNewsController extends AdminBase
                 // Если ошибок нет
                 // Добавляем новую новость
                 $id = News::createNews($options);
-
+                var_dump($id); die;
+                //Добавляем тег
+                News::addTags($tag);
                 // Если запись добавлена
                 if ($id) {
                     // Проверим, загружалось ли через форму изображение
@@ -65,6 +69,7 @@ class AdminNewsController extends AdminBase
                         // Если загружалось, переместим его в нужную папке, дадим новое имя
                         move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/{$id}.jpg");
                     }
+
                 };
 
                 // Перенаправляем пользователя на страницу управления новостями

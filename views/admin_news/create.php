@@ -37,15 +37,19 @@
                             <?php endforeach; ?>
                             <?php endif; ?>
                     </select>
-                    <br/>
+                </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Теги</label>
+                        <input type="text" name="tag" value="" placeholder="" class="form-control" id="exampleFormControlTextarea1" rows="3">
+                    </div>
+
                     <div class="form-group">
                         <label for="exampleFormControlFile1">Зображення</label>
                         <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
                     </div>
-                    <br/><br/>
                     <input type="submit" name="submit" value="Зберегти" class="btn btn-success">
-                </div>
             </form>
+        <br/>
         </div>
 
 

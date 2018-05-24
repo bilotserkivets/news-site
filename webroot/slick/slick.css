@@ -117,3 +117,18 @@
 .slick-arrow.slick-hidden {
     display: none;
 }
+/* стилі для слайдеру*/
+.sl__slide {
+    position: relative;
+}
+
+.sl__text {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    padding: 20px 0;
+}

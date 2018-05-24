@@ -13,7 +13,7 @@ class News
 
         $db = Db::getConnection();
 
-        $result = $db->query("SELECT * FROM news WHERE id = '$id' AND cat_name = '$category'");
+        $result = $db->query("SELECT * FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
@@ -30,7 +30,9 @@ class News
 
         $newsList = [];
 
-        $result = $db->query("SELECT * FROM news WHERE cat_name = 'politika' ORDER BY id LIMIT ". $count);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+        ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+        ."FROM news LEFT JOIN category ON category.cat_name = 'politika' ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -55,7 +57,9 @@ class News
 
         $newsList = [];
 
-        $result = $db->query("SELECT * FROM news WHERE cat_name = 'ekonomika' ORDER BY id LIMIT ". $count);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."FROM news LEFT JOIN category ON category.cat_name = 'ekonomika' ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -67,6 +71,7 @@ class News
             $newsList[$i]['pubdate'] = $row['pubdate'];
             $newsList[$i]['author_id'] = $row['author_id'];
             $newsList[$i]['cat_name'] = $row['cat_name'];
+
             $i++;
         }
         return $newsList;
@@ -80,7 +85,9 @@ class News
 
         $newsList = [];
 
-        $result = $db->query("SELECT * FROM news WHERE cat_name = 'sport' ORDER BY id LIMIT ". $count);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."FROM news LEFT JOIN category ON category.cat_name = 'sport' ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -92,6 +99,7 @@ class News
             $newsList[$i]['pubdate'] = $row['pubdate'];
             $newsList[$i]['author_id'] = $row['author_id'];
             $newsList[$i]['cat_name'] = $row['cat_name'];
+
             $i++;
         }
         return $newsList;
@@ -125,7 +133,9 @@ class News
 
         $newsList = [];
 
-        $result = $db->query("SELECT * FROM news WHERE cat_name = 'tehnology' ORDER BY id LIMIT ". $count);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."FROM news LEFT JOIN category ON category.cat_name = 'tehnology' ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -137,6 +147,7 @@ class News
             $newsList[$i]['pubdate'] = $row['pubdate'];
             $newsList[$i]['author_id'] = $row['author_id'];
             $newsList[$i]['cat_name'] = $row['cat_name'];
+
             $i++;
         }
         return $newsList;
@@ -153,9 +164,13 @@ class News
             $db = Db::getConnection();
 
 
-            $sql = 'SELECT * FROM news '
+            /*$sql = 'SELECT * FROM news '
             . 'WHERE cat_name = :category '
             . 'ORDER BY id ASC LIMIT :limit OFFSET :offset';
+            */
+        $sql = "SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
+        ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
+        ."LEFT JOIN category ON category.cat_name = :category ORDER BY id ASC LIMIT :limit OFFSET :offset";
 
         $result = $db->prepare($sql);
         $result->bindParam(':category', $category, PDO::PARAM_INT);
@@ -350,7 +365,11 @@ public static function getTotalNewsInCategory($category)
         $db = Db::getConnection();
 
         // Получение и возврат результатов
-        $result = $db->query('SELECT id, cat_name, author_id, title, content, pubdate FROM news ORDER BY id ASC');
+        //$result = $db->query('SELECT id, cat_name, author_id, title, content, pubdate FROM news ORDER BY id ASC');
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
+        ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name, category.title AS cat_title FROM news "
+        ."LEFT JOIN category ON news.category_id = category.id ORDER BY id ASC");
+
         $newsList = [];
         $i = 0;
         while ($row = $result->fetch()) {
@@ -359,6 +378,7 @@ public static function getTotalNewsInCategory($category)
             $newsList[$i]['author_id'] = $row['author_id'];
             $newsList[$i]['title'] = $row['title'];
             $newsList[$i]['pubdate'] = $row['pubdate'];
+            $newsList[$i]['cat_title'] = $row['cat_title'];
             $i++;
         }
         return $newsList;
@@ -370,13 +390,13 @@ public static function getTotalNewsInCategory($category)
      */
     public static function createNews($options)
     {
-
+        var_dump($options); die;
         // Соединение с БД
         $db = Db::getConnection();
 
         // Текст запроса к БД
-        $sql = 'INSERT INTO news (title, content, category_id) '
-        . 'VALUES (:title, :content, :category_id)';
+        $sql = 'INSERT INTO news (title, content, category_id, author_id) '
+        . 'VALUES (:title, :content, :category_id, :author_id)';
 
         // Получение и возврат результатов.
         $result = $db->prepare($sql);
@@ -384,6 +404,7 @@ public static function getTotalNewsInCategory($category)
         $result->bindParam(':title', $options['title'], PDO::PARAM_STR);
         $result->bindParam(':content', $options['content'], PDO::PARAM_STR);
         $result->bindParam(':category_id', $options['category_id'], PDO::PARAM_INT);
+        $result->bindParam(':author_id', $options['author_id'], PDO::PARAM_INT);
 
         if ($result->execute()) {
             // Если запрос выполенен успешно, возвращаем id добавленной записи
@@ -438,5 +459,26 @@ public static function getTotalNewsInCategory($category)
 
         // Получение и возврат результатов
         return $result->fetch();
+    }
+    public static function addTags($tag) {
+
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        $sql = 'INSERT INTO tags (tag) '
+            . 'VALUES (:tag)';
+
+        // Получение и возврат результатов.
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':tag', $tag, PDO::PARAM_STR);
+
+
+        if ($result->execute()) {
+            // Если запрос выполенен успешно, возвращаем id добавленной записи
+            return $db->lastInsertId();
+        }
+        // Иначе возвращаем 0
+        return 0;
     }
 }
