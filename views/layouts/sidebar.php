@@ -22,6 +22,7 @@
 
                 <ul class="list-unstyled mb-0">
                     <?php foreach($lastNews as $news): ?>
+                        <div><?php echo $news['pubdate'];?></div>
                         <li>
                             <a href="/news/<?php echo $news['cat_name'];?>/<?php echo $news['id']; ?>"><?php echo $news['title'];?></a>
                         </li>

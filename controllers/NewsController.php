@@ -91,6 +91,8 @@ class NewsController
        $tagNews = [];
        $tagNews = News::getNewsByTag($idTag);
         $topAuthors = Comment::getTopAutors();
+        // Список последних новостей
+        $lastNews = News::getLastNews();
 
         require_once (ROOT.'/views/news/tag.php');
        return true;

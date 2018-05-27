@@ -3,7 +3,8 @@
 
 class News
 {
-    const SHOW_BY_DEFAULT = 3;
+    const SHOW_BY_DEFAULT = 5;
+
 /*
  * Вибір однієї новини категорії
  */
@@ -33,7 +34,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
         ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-        ."FROM news JOIN category ON category.cat_name = 'politika' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
+        ."FROM news JOIN category ON category.cat_name = 'politika' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
 
@@ -60,7 +61,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news JOIN category ON category.cat_name = 'ekonomika' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'ekonomika' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
 
@@ -88,7 +89,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news JOIN category ON category.cat_name = 'sport' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'sport' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
 
@@ -136,7 +137,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news JOIN category ON category.cat_name = 'tehnology' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'tehnology' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
 
@@ -170,8 +171,8 @@ class News
             . 'ORDER BY id ASC LIMIT :limit OFFSET :offset';
             */
         $sql = "SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
-        ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
-        ."JOIN category ON category.cat_name = :category AND category.id = news.category_id ORDER BY id ASC LIMIT :limit OFFSET :offset";
+        ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name, category.title AS category_title FROM news "
+        ."JOIN category ON category.cat_name = :category AND category.id = news.category_id ORDER BY id DESC LIMIT :limit OFFSET :offset";
 
         $result = $db->prepare($sql);
         $result->bindParam(':category', $category, PDO::PARAM_INT);
@@ -194,6 +195,7 @@ class News
                 $newsCategory[$i]['pubdate'] = $row['pubdate'];
                 $newsCategory[$i]['author_id'] = $row['author_id'];
                 $newsCategory[$i]['cat_name'] = $row['cat_name'];
+                $newsCategory[$i]['category_title'] = $row['category_title'];
                 $i++;
 
             }
@@ -277,17 +279,18 @@ public static function getNewsByCategory($categoryId = false) {
         $newsTag = [];
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
         ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-        ."FROM news LEFT JOIN news_tags ON news_tags.newsid = news.id WHERE news_tags.tagid = ". $idTag);
+        ."FROM news JOIN category JOIN news_tags ON news_tags.tagid = " .$idTag. "  AND news.category_id = category.id AND news.id = news_tags.newsid");
 
         $i = 0;
 
         while($row = $result->fetch()) {
 
             $newsTag[$i]['id'] = $row['id'];
-            $newsTag[$i]['cat_name'] = $row['cat_name'];
+            //$newsTag[$i]['cat_name'] = $row['cat_name'];
             $newsTag[$i]['title'] = $row['title'];
             $newsTag[$i]['content'] = $row['content'];
             $newsTag[$i]['pubdate'] = $row['pubdate'];
+            $newsTag[$i]['cat_name'] = $row['cat_name'];
             $i++;
         }
 

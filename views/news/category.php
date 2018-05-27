@@ -7,13 +7,12 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-                <h1 class="my-4">Новини категорії:
-                    <small></small>
+                <h1 class="my-4">Новини категорії:<?php echo $categoryNews[0]['category_title'];?>
+
                 </h1>
 
                 <h3></h3>
                 <?php foreach($categoryNews as $categoryItem): ?>
-
                     <h4><a href="/news/<?php echo $categoryItem['cat_name'];?>/<?php echo $categoryItem['id'];?>"><?php echo $categoryItem['title']; ?></a></h4>
 
 

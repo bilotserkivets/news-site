@@ -10,6 +10,8 @@ class UserController
      */
     public function actionRegister()
     {
+        $lastNews = News::getLastNews();
+        $topAuthors = Comment::getTopAutors();
         $categories = Category::getCategoriesList();
         // Переменные для формы
         $name = false;

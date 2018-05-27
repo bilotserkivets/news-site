@@ -12,7 +12,7 @@
         <div class="sl">
             <?php foreach($lastNews as $news): ?>
         <div class="sl__slide">
-           <a href="#"><img src="/webroot/upload/images/<?php echo $news['id'];?>.jpg" alt="Картинка слайда" class="sl__image">
+           <a href="/news/<?php echo $news['cat_name'];?>/<?php echo $news['id'];?>"><img src="/webroot/upload/images/<?php echo $news['id'];?>.jpg" alt="Картинка слайда" class="sl__image">
             <div class="sl__text">
                 <h5 class="sl__zag"><?php echo $news['title'];?></h5>
             </div>
@@ -35,10 +35,7 @@
                             </table>
                         <?php endforeach;?>
                     </div>
-                    <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
 
-                    </div>
                 </div>
 
                 <!-- Blog Post -->
@@ -57,10 +54,7 @@
                             </table>
                         <?php endforeach;?>
                     </div>
-                    <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
 
-                    </div>
                 </div>
 
                 <!-- Blog Post -->
@@ -79,10 +73,7 @@
                             </table>
                         <?php endforeach;?>
                     </div>
-                    <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
 
-                    </div>
                 </div>
 
                 <!-- Blog Post -->
@@ -101,10 +92,7 @@
                             </table>
                         <?php endforeach;?>
                     </div>
-                    <div class="card-footer text-muted">
-                        Posted on January 1, 2017 by
 
-                    </div>
                 </div>
     </div>
 
