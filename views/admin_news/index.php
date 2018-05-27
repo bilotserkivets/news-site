@@ -20,7 +20,7 @@
         <th>Теги</th>
         <th></th>
         <th></th>
-    </tr>
+    </hr>
     <?php foreach ($newsList as $news): ?>
         <tr>
             <td><?php echo $news['id']; ?></td>

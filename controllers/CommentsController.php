@@ -12,6 +12,8 @@ public function actionView($id) {
     $authorComments = Comment::getAuthorComents($id);
     $author = User::getUsers();
     $topAuthors = Comment::getTopAutors();
+    // Список последних новостей
+    $lastNews = News::getLastNews();
 
     require_once(ROOT.'/views/comments/view.php');
     return true;

@@ -11,7 +11,8 @@ class NewsController
         $newsList = News::getNewsPolitika();
        $categories = Category::getCategoriesList();
        $author = User::getUsers();
-
+// Список новостей для слайдера
+       $lastNews = News::getLastNews();
       require_once (ROOT.'/views/site/index.php');
       return true;
     }
@@ -22,6 +23,11 @@ class NewsController
     */
    public function actionCategory($category, $page = 1) {
 
+// Список последних новостей
+       $lastNews = News::getLastNews();
+       // Список авторов
+       $topAuthors = Comment::getTopAutors();
+
        $categoryNews = [];
        $categoryNews = News::getNewsCategory($category, $page);
 
@@ -31,10 +37,9 @@ class NewsController
        $total = News::getTotalNewsInCategory($category);
 
        $pagination = new Pagination($total, $page, News::SHOW_BY_DEFAULT, 'page-');
-       $topAuthors = Comment::getTopAutors();
 
        require_once (ROOT.'/views/news/category.php');
-        return true;
+       return true;
 
     }
 
@@ -45,7 +50,8 @@ class NewsController
        $tags = [];
 
        $oneNews = News::getNewsListById($category, $id);
-
+// Список новостей для слайдера
+        $lastNews = News::getLastNews();
         $categories = Category::getCategoriesList();
 
             $comments = Comment::getComments($id);

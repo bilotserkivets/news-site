@@ -3,7 +3,7 @@
 
 class News
 {
-    const SHOW_BY_DEFAULT = 5;
+    const SHOW_BY_DEFAULT = 3;
 /*
  * Вибір однієї новини категорії
  */
@@ -13,7 +13,8 @@ class News
 
         $db = Db::getConnection();
 
-        $result = $db->query("SELECT * FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
@@ -32,7 +33,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
         ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-        ."FROM news LEFT JOIN category ON category.cat_name = 'politika' ORDER BY id LIMIT ". $count);
+        ."FROM news JOIN category ON category.cat_name = 'politika' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -59,7 +60,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news LEFT JOIN category ON category.cat_name = 'ekonomika' ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'ekonomika' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -87,7 +88,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news LEFT JOIN category ON category.cat_name = 'sport' ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'sport' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -135,7 +136,7 @@ class News
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
             ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
-            ."FROM news LEFT JOIN category ON category.cat_name = 'tehnology' ORDER BY id LIMIT ". $count);
+            ."FROM news JOIN category ON category.cat_name = 'tehnology' AND category.id = news.category_id ORDER BY id LIMIT ". $count);
 
         $i = 0;
 
@@ -155,7 +156,7 @@ class News
     /*
      * Список новин у вибраній категорії
      */
-    public static function getNewsCategory($category, $page = 1) {
+    public static function getNewsCategory($category = false, $page = 1) {
 
         $limit = News::SHOW_BY_DEFAULT;
             $page = intval($page);
@@ -170,7 +171,7 @@ class News
             */
         $sql = "SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
         ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
-        ."LEFT JOIN category ON category.cat_name = :category ORDER BY id ASC LIMIT :limit OFFSET :offset";
+        ."JOIN category ON category.cat_name = :category AND category.id = news.category_id ORDER BY id ASC LIMIT :limit OFFSET :offset";
 
         $result = $db->prepare($sql);
         $result->bindParam(':category', $category, PDO::PARAM_INT);
@@ -274,7 +275,9 @@ public static function getNewsByCategory($categoryId = false) {
         $db = Db::getConnection();
 
         $newsTag = [];
-        $result = $db->query("SELECT * FROM news LEFT JOIN news_tags ON news_tags.newsid = news.id WHERE news_tags.tagid = ". $idTag);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+        ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+        ."FROM news LEFT JOIN news_tags ON news_tags.newsid = news.id WHERE news_tags.tagid = ". $idTag);
 
         $i = 0;
 
@@ -301,17 +304,18 @@ public static function getNewsByCategory($categoryId = false) {
         $db = Db::getConnection();
 
         // Получение и возврат результатов
-        $result = $db->query('SELECT * FROM news '
-            . 'ORDER BY id DESC LIMIT '.$count);
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+                ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
+                . " LEFT JOIN category ON category.id = news.category_id ORDER BY id DESC LIMIT ".$count);
         $i = 0;
         $newsList = [];
         while ($row = $result->fetch()) {
             $newsList[$i]['id'] = $row['id'];
             $newsList[$i]['category_id'] = $row['category_id'];
+            $newsList[$i]['cat_name'] = $row['cat_name'];
             $newsList[$i]['title'] = $row['title'];
             $newsList[$i]['content'] = $row['content'];
             $newsList[$i]['pubdate'] = $row['pubdate'];
-            $newsList[$i]['tag_id'] = $row['tag_id'];
             $i++;
         }
         return $newsList;
@@ -341,7 +345,8 @@ public static function getTotalNewsInCategory($category)
     $db = Db::getConnection();
 
     // Текст запроса к БД
-    $sql = "SELECT count(id) AS count FROM news WHERE cat_name = :category";
+   // $sql = "SELECT count(id) AS count FROM news JOIN category WHERE cat_name = :category";
+    $sql = "SELECT count(news.id) AS count FROM news JOIN category ON news.category_id = category.id WHERE category.cat_name = :category";
 
     // Используется подготовленный запрос
     $result = $db->prepare($sql);
@@ -390,7 +395,7 @@ public static function getTotalNewsInCategory($category)
      */
     public static function createNews($options)
     {
-        var_dump($options); die;
+
         // Соединение с БД
         $db = Db::getConnection();
 

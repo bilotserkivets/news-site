@@ -14,8 +14,24 @@
             </div>
         </div>
     </div>
+    <!-- Last News -->
+    <div class="card my-4">
+        <h5 class="card-header">Останні новини</h5>
+        <div class="card-body">
+            <div class="row">
 
-    <!-- Categories Widget -->
+                <ul class="list-unstyled mb-0">
+                    <?php foreach($lastNews as $news): ?>
+                        <li>
+                            <a href="/news/<?php echo $news['cat_name'];?>/<?php echo $news['id']; ?>"><?php echo $news['title'];?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <!-- Authors -->
     <div class="card my-4">
         <h5 class="card-header">ТОП-5 коментаторів</h5>
         <div class="card-body">

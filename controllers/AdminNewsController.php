@@ -59,7 +59,7 @@ class AdminNewsController extends AdminBase
                 // Если ошибок нет
                 // Добавляем новую новость
                 $id = News::createNews($options);
-                var_dump($id); die;
+                
                 //Добавляем тег
                 News::addTags($tag);
                 // Если запись добавлена

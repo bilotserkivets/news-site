@@ -9,12 +9,6 @@
             <!-- Title -->
             <h1 class="mt-4"><?php echo $oneNews['title'];?></h1>
 
-            <!-- Author -->
-            <p class="lead">
-                by
-                <a href="#">Автор новини</a>
-            </p>
-
             <hr>
 
             <!-- Date/Time -->
