@@ -48,7 +48,7 @@ class Comment
     {
         $db = Db::getConnection();
 
-        $result = $db->query("SELECT * FROM comment");
+        $result = $db->query("SELECT id, news_id, author_id, content, DATE_FORMAT(pubdate, '%H:%i %d.%m.%Y') AS pubdate, status FROM comment");
 
         $i = 0;
         while ($row = $result->fetch()) {

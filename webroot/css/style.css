@@ -9,3 +9,6 @@ body {
 carousel slide {
     padding-top: 50px;
 }
+.col {
+    color: red;
+}

@@ -15,7 +15,7 @@ class News
         $db = Db::getConnection();
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
+            ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
@@ -33,7 +33,7 @@ class News
         $newsList = [];
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-        ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+        ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
         ."FROM news JOIN category ON category.cat_name = 'politika' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
@@ -60,7 +60,7 @@ class News
         $newsList = [];
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
             ."FROM news JOIN category ON category.cat_name = 'ekonomika' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
@@ -88,7 +88,7 @@ class News
         $newsList = [];
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
             ."FROM news JOIN category ON category.cat_name = 'sport' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
@@ -136,7 +136,7 @@ class News
         $newsList = [];
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-            ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+            ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
             ."FROM news JOIN category ON category.cat_name = 'tehnology' AND category.id = news.category_id ORDER BY id DESC LIMIT ". $count);
 
         $i = 0;
@@ -278,7 +278,7 @@ public static function getNewsByCategory($categoryId = false) {
 
         $newsTag = [];
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-        ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
+        ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
         ."FROM news JOIN category JOIN news_tags ON news_tags.tagid = " .$idTag. "  AND news.category_id = category.id AND news.id = news_tags.newsid");
 
         $i = 0;
@@ -308,7 +308,7 @@ public static function getNewsByCategory($categoryId = false) {
 
         // Получение и возврат результатов
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-                ."news.pubdate AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
+                ."DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
                 . " LEFT JOIN category ON category.id = news.category_id ORDER BY id DESC LIMIT ".$count);
         $i = 0;
         $newsList = [];
@@ -374,7 +374,7 @@ public static function getTotalNewsInCategory($category)
 
         // Получение и возврат результатов
         //$result = $db->query('SELECT id, cat_name, author_id, title, content, pubdate FROM news ORDER BY id ASC');
-        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, "
         ."news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name, category.title AS cat_title FROM news "
         ."LEFT JOIN category ON news.category_id = category.id ORDER BY id ASC");
 
@@ -489,4 +489,20 @@ public static function getTotalNewsInCategory($category)
         // Иначе возвращаем 0
         return 0;
     }
+
+   /*public static function getTagsByOneNews() {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        $result = $db->query("tags.tag AS tags FROM tags JOIN news JOIN news_tags ON news.id = news_tags.newsid AND tags.id = news_tags.tagid");
+
+        $tagsNews = [];
+        $i = 0;
+        while ($row = $result->fetch()) {
+            $tagsNews[$i]['tags'] = $row['tags'];
+
+            $i++;
+        }
+        return $tagsNews;
+    }*/
 }

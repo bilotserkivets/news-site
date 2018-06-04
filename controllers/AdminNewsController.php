@@ -19,6 +19,7 @@ class AdminNewsController extends AdminBase
         // Получаєм список новостей
         $newsList = News::getNewsList();
         $author = User::getUsers();
+
         // Подключаем вид
         require_once(ROOT . '/views/admin_news/index.php');
         return true;
