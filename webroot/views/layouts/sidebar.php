@@ -2,19 +2,7 @@
 <!-- Sidebar Widgets Column -->
 <div class="col-md-4">
 
-    <!-- Search Widget -->
-    <div class="card my-4">
-        <h5 class="card-header">Пошук</h5>
-        <div class="card-body">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Шукати...">
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary" type="button">Шукати!</button>
-                </span>
-            </div>
-        </div>
-    </div>
-    <!-- Last News -->
+       <!-- Last News -->
     <div class="card my-4">
         <h5 class="card-header">Останні новини</h5>
         <div class="card-body">
@@ -49,16 +37,25 @@
             </div>
         </div>
     </div>
-
-    <!-- Side Widget -->
+ <!-- Top News Views-->
     <div class="card my-4">
-        <h5 class="card-header">Side Widget</h5>
+        <h5 class="card-header">Найпопулярніші новини</h5>
         <div class="card-body">
-            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+            <div class="row">
+
+                <ul class="list-unstyled mb-0">
+                    <?php foreach($NewsViews as $newsview): ?>
+                        <div><?php echo $news['pubdate'];?></div>
+                        <li>
+                            <a href="/news/<?php echo $newsview['cat_name'];?>/<?php echo $newsview['id']; ?>"><?php echo $newsview['title']; echo $newsview['views'];?></a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </div>
         </div>
     </div>
-
-</div>
+    </div>
 
 </div>
 <!-- /.row -->

@@ -9,6 +9,7 @@ class SiteController {
     public function actionIndex() {
         $categories = [];
         $categories = Category::getCategoriesList();
+        $newsViews = News::getNumberViewsByNews();
 
 
         $newsPolitika = [];

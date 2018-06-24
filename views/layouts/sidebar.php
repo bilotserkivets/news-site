@@ -37,7 +37,24 @@
             </div>
         </div>
     </div>
+<!-- Top News Views-->
+    <div class="card my-4">
+        <h5 class="card-header">Найпопулярніші новини</h5>
+        <div class="card-body">
+            <div class="row">
 
+                <ul class="list-unstyled mb-0">
+                    <?php foreach($newsViews as $newsview): ?>
+                        <!--<div><?php echo $news['pubdate'];?></div>-->
+                        <li>
+                            <a href="/news/<?php echo $newsview['cat_name'];?>/<?php echo $newsview['id']; ?>"><?php echo $newsview['title']; ?></a> (<?php echo $newsview['views'];?>)
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </div>
+        </div>
+    </div>
     </div>
 
 </div>

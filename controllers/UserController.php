@@ -12,6 +12,7 @@ class UserController {
         $lastNews = News::getLastNews();
         $topAuthors = Comment::getTopAutors();
         $categories = Category::getCategoriesList();
+        $newsViews = News::getNumberViewsByNews();
         // Переменные для формы
         $name = false;
         $email = false;
@@ -62,6 +63,7 @@ class UserController {
         $lastNews = News::getLastNews();
         $topAuthors = Comment::getTopAutors();
         $categories = Category::getCategoriesList();
+        $newsViews = News::getNumberViewsByNews();
         // Переменные для формы
         $email = false;
         $password = false;

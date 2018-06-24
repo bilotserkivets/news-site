@@ -11,6 +11,7 @@ class NewsController {
         $newsList = [];
         $newsList = News::getNewsPolitika();
         $categories = Category::getCategoriesList();
+        $newsViews = News::getNumberViewsByNews();
         $author = User::getUsers();
 // Список новостей для слайдера
         $lastNews = News::getLastNews();
@@ -30,7 +31,7 @@ class NewsController {
         $categoryNews = News::getNewsCategory($category, $page);
 
         $categories = Category::getCategoriesList();
-
+        $newsViews = News::getNumberViewsByNews();
 
         $total = News::getTotalNewsInCategory($category);
 
@@ -50,7 +51,7 @@ class NewsController {
 // Список новостей для слайдера
         $lastNews = News::getLastNews();
         $categories = Category::getCategoriesList();
-
+        $newsViews = News::getNumberViewsByNews();
         $comments = Comment::getComments($id);
         $tags = News::getTagsByNews($id);
         $author = User::getUsers();
@@ -83,6 +84,7 @@ class NewsController {
 
     public function actionTagnews($idTag) {
         $categories = Category::getCategoriesList();
+        $newsViews = News::getNumberViewsByNews();
         $db = Db::getConnection();
         $tagNews = [];
         $tagNews = News::getNewsByTag($idTag);

@@ -469,7 +469,7 @@ class News {
 
         // Выполнение коменды
         $result->execute();
-
+        
         // Получение и возврат результатов
         return $result->fetch();
     }
@@ -496,6 +496,30 @@ class News {
         return 0;
     }
 
+    public static function getNumberViewsByNews($count = self::SHOW_BY_DEFAULT) {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Получение и возврат результатов
+        $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
+                . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, news.views AS views, category.cat_name AS cat_name FROM news "
+                . " LEFT JOIN category ON category.id = news.category_id ORDER BY views DESC LIMIT " . $count);
+        $i = 0;
+        $newsList = [];
+        while ($row = $result->fetch()) {
+            $newsList[$i]['id'] = $row['id'];
+            $newsList[$i]['category_id'] = $row['category_id'];
+            $newsList[$i]['cat_name'] = $row['cat_name'];
+            $newsList[$i]['title'] = $row['title'];
+            $newsList[$i]['content'] = $row['content'];
+            $newsList[$i]['pubdate'] = $row['pubdate'];
+            $newsList[$i]['views'] = $row['views'];
+            $i++;
+        }
+        return $newsList;
+    }
+    
+    
     /* public static function getTagsByOneNews() {
       // Соединение с БД
       $db = Db::getConnection();
