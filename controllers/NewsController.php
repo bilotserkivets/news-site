@@ -18,10 +18,7 @@ class NewsController {
         return true;
     }
 
-    /*
-     *
-     */
-
+    
     public function actionCategory($category, $page = 1) {
 
 // Список последних новостей
@@ -85,7 +82,7 @@ class NewsController {
     }
 
     public function actionTagnews($idTag) {
-
+        $categories = Category::getCategoriesList();
         $db = Db::getConnection();
         $tagNews = [];
         $tagNews = News::getNewsByTag($idTag);
