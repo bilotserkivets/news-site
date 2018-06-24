@@ -1,12 +1,12 @@
-<?php include ROOT.'/views/layouts/header.php'; ?>
-    <!-- Page Content -->
-    <div class="container">
+<?php include ROOT . '/views/layouts/header.php'; ?>
+<!-- Page Content -->
+<div class="container">
 
     <div class="row">
 
-    <!-- Blog Entries Column -->
-    <div class="col-md-8">
-        <br/>
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+            <br/>
 
             <?php if (isset($errors) && is_array($errors)): ?>
                 <ul>
@@ -31,8 +31,8 @@
             </form>
 
 
-    </div>
+        </div>
 
-<?php include ROOT . '/views/layouts/sidebar.php'; ?>
+        <?php include ROOT . '/views/layouts/sidebar.php'; ?>
 
-<?php include ROOT.'/views/layouts/footer.php'; ?>
+        <?php include ROOT . '/views/layouts/footer.php'; ?>

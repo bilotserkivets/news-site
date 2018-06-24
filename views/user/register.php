@@ -1,27 +1,27 @@
-<?php include ROOT.'/views/layouts/header.php'; ?>
-    <!-- Page Content -->
-    <div class="container">
+<?php include ROOT . '/views/layouts/header.php'; ?>
+<!-- Page Content -->
+<div class="container">
 
-        <div class="row">
+    <div class="row">
 
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-                <br/>
-                <?php if ($result): ?>
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+            <br/>
+            <?php if ($result): ?>
                 <div class="alert alert-success" role="alert">
                     <p>Ви зареєстровані!</p>
                 </div>
 
-                <?php else: ?>
-                    <?php if (isset($errors) && is_array($errors)): ?>
-                        <ul>
-                            <?php foreach ($errors as $error): ?>
-                                <div class="alert alert-danger" role="alert"><?php echo$error ?></div>
-                                    
-                                    
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
+            <?php else: ?>
+                <?php if (isset($errors) && is_array($errors)): ?>
+                    <ul>
+                        <?php foreach ($errors as $error): ?>
+                            <div class="alert alert-danger" role="alert"><?php echo$error ?></div>
+
+
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
                 <h2>Реєстрація на сайті</h2>
                 <form action="#" method="post">
                     <div class="form-group">
@@ -36,10 +36,10 @@
                     </div>
                     <button type="submit" name="submit" class="btn btn-primary" value="Регистрация">Зареєструватися</button>
                 </form>
-                <?php endif; ?>
+            <?php endif; ?>
 
-            </div>
+        </div>
 
-<?php include ROOT . '/views/layouts/sidebar.php'; ?>
+        <?php include ROOT . '/views/layouts/sidebar.php'; ?>
 
-<?php include ROOT.'/views/layouts/footer.php'; ?>
+        <?php include ROOT . '/views/layouts/footer.php'; ?>

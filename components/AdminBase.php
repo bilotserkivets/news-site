@@ -1,15 +1,12 @@
 <?php
 
-
-abstract class AdminBase
-{
+abstract class AdminBase {
 
     /**
      * Метод, который проверяет пользователя на то, является ли он администратором
      * @return boolean
      */
-    public static function checkAdmin()
-    {
+    public static function checkAdmin() {
         // Проверяем авторизирован ли пользователь. Если нет, он будет переадресован
         $userId = User::checkLogged();
 

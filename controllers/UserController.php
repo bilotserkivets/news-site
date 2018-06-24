@@ -3,13 +3,12 @@
 /**
  * Контроллер UserController
  */
-class UserController
-{
+class UserController {
+
     /**
      * Action для страницы "Регистрация"
      */
-    public function actionRegister()
-    {
+    public function actionRegister() {
         $lastNews = News::getLastNews();
         $topAuthors = Comment::getTopAutors();
         $categories = Category::getCategoriesList();
@@ -43,7 +42,7 @@ class UserController
             if (User::checkEmailExists($email)) {
                 $errors[] = 'Такий email вже використовується';
             }
-            
+
             if ($errors == false) {
                 // Если ошибок нет
                 // Регистрируем пользователя
@@ -55,18 +54,18 @@ class UserController
         require_once(ROOT . '/views/user/register.php');
         return true;
     }
-    
+
     /**
      * Action для страницы "Вход на сайт"
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
+        $lastNews = News::getLastNews();
         $topAuthors = Comment::getTopAutors();
         $categories = Category::getCategoriesList();
         // Переменные для формы
         $email = false;
         $password = false;
-        
+
         // Обработка формы
         if (isset($_POST['submit'])) {
             // Если форма отправлена 
@@ -93,12 +92,11 @@ class UserController
                 $errors[] = 'Не вірні дані для входу на сайт';
             } else {
                 // Если данные правильные, запоминаем пользователя (сессия)
-               User::auth($userId);
+                User::auth($userId);
 
                 // Перенаправляем пользователя в закрытую часть - кабинет 
                 header("Location: /");
             }
-
         }
 
         // Подключаем вид
@@ -109,12 +107,11 @@ class UserController
     /**
      * Удаляем данные о пользователе из сессии
      */
-    public function actionLogout()
-    {
-        
+    public function actionLogout() {
+
         // Удаляем информацию о пользователе из сессии
         unset($_SESSION["user"]);
-        
+
         // Перенаправляем пользователя на главную страницу
         header("Location: /");
     }

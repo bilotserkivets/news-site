@@ -4,13 +4,12 @@
  * Контроллер AdminController
  * Главная страница в админпанели
  */
-class AdminController extends AdminBase
-{
+class AdminController extends AdminBase {
+
     /**
      * Action для стартовой страницы "Панель администратора"
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         // Проверка доступа
         self::checkAdmin();
 
@@ -18,8 +17,9 @@ class AdminController extends AdminBase
         require_once(ROOT . '/views/admin/index.php');
         return true;
     }
-    public function actionNews() {
 
+    public function actionNews() {
+        
     }
 
 }

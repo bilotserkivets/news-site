@@ -1,34 +1,32 @@
 <?php
 
+class Category {
 
-class Category
-{
-public static function getCategoriesList() {
-    $db = Db::getConnection();
+    public static function getCategoriesList() {
+        $db = Db::getConnection();
 
-    $categoryList = [];
+        $categoryList = [];
 
-    $result = $db->query('SELECT id, title, cat_name FROM category');
+        $result = $db->query('SELECT id, title, cat_name FROM category');
 
-    $i = 0;
-    while($row = $result->fetch()) {
+        $i = 0;
+        while ($row = $result->fetch()) {
 
-        $categoryList[$i]['id'] = $row['id'];
-        $categoryList[$i]['title'] = $row['title'];
-        $categoryList[$i]['cat_name'] = $row['cat_name'];
-        $i++;
+            $categoryList[$i]['id'] = $row['id'];
+            $categoryList[$i]['title'] = $row['title'];
+            $categoryList[$i]['cat_name'] = $row['cat_name'];
+            $i++;
+        }
+
+        return $categoryList;
     }
 
-    return $categoryList;
-
-}
     /**
      * Возвращает массив категорий для списка в админпанели <br/>
      * (при этом в результат попадают и включенные и выключенные категории)
      * @return array <p>Массив категорий</p>
      */
-    public static function getCategoriesListAdmin()
-    {
+    public static function getCategoriesListAdmin() {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -45,13 +43,13 @@ public static function getCategoriesList() {
         }
         return $categoryList;
     }
+
     /**
      * Удаляет категорию с заданным id
      * @param integer $id
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function deleteCategoryById($id)
-    {
+    public static function deleteCategoryById($id) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -67,8 +65,7 @@ public static function getCategoriesList() {
     /**
      * Редактирование категории с заданным id
      */
-    public static function updateCategoryById($id, $title)
-    {
+    public static function updateCategoryById($id, $title) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -85,8 +82,7 @@ public static function getCategoriesList() {
     /**
      * Возвращает категорию с указанным id
      */
-    public static function getCategoryById($id)
-    {
+    public static function getCategoryById($id) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -107,18 +103,16 @@ public static function getCategoriesList() {
         return $result->fetch();
     }
 
-
     /**
      * Добавляет новую категорию
      */
-    public static function createCategory($title)
-    {
+    public static function createCategory($title) {
         // Соединение с БД
         $db = Db::getConnection();
 
         // Текст запроса к БД
         $sql = 'INSERT INTO category (title) '
-            . 'VALUES (:title)';
+                . 'VALUES (:title)';
 
         // Получение и возврат результатов. Используется подготовленный запрос
         $result = $db->prepare($sql);

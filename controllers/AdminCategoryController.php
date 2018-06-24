@@ -4,14 +4,12 @@
  * Контроллер AdminCategoryController
  * Управление категориями новостей в админпанели
  */
-class AdminCategoryController extends AdminBase
-{
+class AdminCategoryController extends AdminBase {
 
     /**
      * Action для страницы "Управление категориями"
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         // Проверка доступа
         self::checkAdmin();
 
@@ -26,8 +24,7 @@ class AdminCategoryController extends AdminBase
     /**
      * Action для страницы "Добавить категорию"
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         // Проверка доступа
         self::checkAdmin();
 
@@ -63,8 +60,7 @@ class AdminCategoryController extends AdminBase
     /**
      * Action для страницы "Редактировать категорию"
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         // Проверка доступа
         self::checkAdmin();
 
@@ -93,8 +89,7 @@ class AdminCategoryController extends AdminBase
     /**
      * Action для страницы "Удалить категорию"
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         // Проверка доступа
         self::checkAdmin();
 

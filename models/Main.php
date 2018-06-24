@@ -1,7 +1,7 @@
 <?php
 
-class Main
-{
+class Main {
+
     public static function getNewsListById($id) {
         $id = intval($id);
 
@@ -24,7 +24,7 @@ class Main
 
         $i = 0;
 
-        while($row = $result->fetch()) {
+        while ($row = $result->fetch()) {
             $newsList[$i]['id'] = $row['id'];
             $newsList[$i]['title'] = $row['title'];
             $newsList[$i]['date'] = $row['date'];
@@ -35,4 +35,5 @@ class Main
         }
         return $newsList;
     }
+
 }

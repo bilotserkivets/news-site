@@ -1,18 +1,17 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Apach
  * Date: 08.05.2018
  * Time: 22:55
  */
+class AdminCommentsController extends AdminBase {
 
-class AdminCommentsController extends AdminBase
-{
     /**
      * Action для страници "Управление комментариями"
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         // Проверка доступа
         self::checkAdmin();
@@ -28,8 +27,7 @@ class AdminCommentsController extends AdminBase
     /**
      * Action для страници "Добавить комментарий"
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         // Проверка доступа
         self::checkAdmin();
 
@@ -78,8 +76,7 @@ class AdminCommentsController extends AdminBase
     /**
      * Action для страницы "Редактировать коментарий"
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         // Проверка доступа
         self::checkAdmin();
 
@@ -109,8 +106,7 @@ class AdminCommentsController extends AdminBase
     /**
      * Action для страницы "Удалить коментарий"
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         // Проверка доступа
         self::checkAdmin();
 

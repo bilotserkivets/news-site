@@ -3,8 +3,7 @@
 /**
  * Класс User - модель для работы с пользователями
  */
-class User
-{
+class User {
 
     /**
      * Регистрация пользователя 
@@ -13,8 +12,7 @@ class User
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function register($name, $email, $password)
-    {
+    public static function register($name, $email, $password) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -38,8 +36,7 @@ class User
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function edit($id, $name, $password)
-    {
+    public static function edit($id, $name, $password) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -62,8 +59,7 @@ class User
      * @param string $password <p>Пароль</p>
      * @return mixed : integer user id or false
      */
-    public static function checkUserData($email, $password)
-    {
+    public static function checkUserData($email, $password) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -90,8 +86,7 @@ class User
      * Запоминаем пользователя
      * @param integer $userId <p>id пользователя</p>
      */
-    public static function auth($userId)
-    {
+    public static function auth($userId) {
         // Записываем идентификатор пользователя в сессию
         $_SESSION['user'] = $userId;
     }
@@ -101,8 +96,7 @@ class User
      * Иначе перенаправляет на страницу входа
      * @return string <p>Идентификатор пользователя</p>
      */
-    public static function checkLogged()
-    {
+    public static function checkLogged() {
         // Если сессия есть, вернем идентификатор пользователя
         if (isset($_SESSION['user'])) {
             return $_SESSION['user'];
@@ -115,8 +109,7 @@ class User
      * Проверяет является ли пользователь гостем
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function isGuest()
-    {
+    public static function isGuest() {
         if (isset($_SESSION['user'])) {
             return false;
         }
@@ -128,8 +121,7 @@ class User
      * @param string $name <p>Имя</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function checkName($name)
-    {
+    public static function checkName($name) {
         if (strlen($name) >= 2) {
             return true;
         }
@@ -141,8 +133,7 @@ class User
      * @param string $phone <p>Телефон</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function checkPhone($phone)
-    {
+    public static function checkPhone($phone) {
         if (strlen($phone) >= 10) {
             return true;
         }
@@ -154,8 +145,7 @@ class User
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function checkPassword($password)
-    {
+    public static function checkPassword($password) {
         if (strlen($password) >= 6) {
             return true;
         }
@@ -167,8 +157,7 @@ class User
      * @param string $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function checkEmail($email)
-    {
+    public static function checkEmail($email) {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
@@ -180,8 +169,7 @@ class User
      * @param type $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function checkEmailExists($email)
-    {
+    public static function checkEmailExists($email) {
         // Соединение с БД        
         $db = Db::getConnection();
 
@@ -203,8 +191,7 @@ class User
      * @param integer $id <p>id пользователя</p>
      * @return array <p>Массив с информацией о пользователе</p>
      */
-    public static function getUserById($id)
-    {
+    public static function getUserById($id) {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -222,8 +209,7 @@ class User
         return $result->fetch();
     }
 
-    public static function getUsers()
-    {
+    public static function getUsers() {
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -235,7 +221,7 @@ class User
 
         $i = 0;
 
-        while($row = $result->fetch()) {
+        while ($row = $result->fetch()) {
             $nameUsers[$i]['id'] = $row['id'];
             $nameUsers[$i]['name'] = $row['name'];
             $i++;

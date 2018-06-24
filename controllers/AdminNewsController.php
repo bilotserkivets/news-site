@@ -4,14 +4,12 @@
  * Контроллер AdminNewsController
  * Управление Новостями в админпанели
  */
-class AdminNewsController extends AdminBase
-{
+class AdminNewsController extends AdminBase {
 
     /**
      * Action для страници "Управление новостями"
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
 
         // Проверка доступа
         self::checkAdmin();
@@ -28,8 +26,7 @@ class AdminNewsController extends AdminBase
     /**
      * Action для страници "Добавить новость"
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         // Проверка доступа
         self::checkAdmin();
 
@@ -60,7 +57,7 @@ class AdminNewsController extends AdminBase
                 // Если ошибок нет
                 // Добавляем новую новость
                 $id = News::createNews($options);
-                
+
                 //Добавляем тег
                 News::addTags($tag);
                 // Если запись добавлена
@@ -70,7 +67,6 @@ class AdminNewsController extends AdminBase
                         // Если загружалось, переместим его в нужную папке, дадим новое имя
                         move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/webroot/upload/images/{$id}.jpg");
                     }
-
                 };
 
                 // Перенаправляем пользователя на страницу управления новостями
@@ -86,8 +82,7 @@ class AdminNewsController extends AdminBase
     /**
      * Action для страницы "Редактировать новость"
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         // Проверка доступа
         self::checkAdmin();
 
@@ -114,7 +109,7 @@ class AdminNewsController extends AdminBase
                 if (is_uploaded_file($_FILES["image"]["tmp_name"])) {
 
                     // Если загружалось, переместим его в нужную папке, дадим новое имя
-                   move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/{$id}.jpg");
+                    move_uploaded_file($_FILES["image"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . "/upload/images/{$id}.jpg");
                 }
             }
 
@@ -130,8 +125,7 @@ class AdminNewsController extends AdminBase
     /**
      * Action для страницы "Удалить новость"
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         // Проверка доступа
         self::checkAdmin();
 
