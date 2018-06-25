@@ -11,9 +11,15 @@
 
             <hr>
 
-            <!-- Date/Time -->
-            <p>Опубліковано <?php echo $oneNews['pubdate'] ?></p>
-
+            <!-- Date/Time/Views -->
+            <div class="d-flex justify-content-between">
+      <div>
+         Опубліковано <?php echo $oneNews['pubdate'];?>
+      </div>
+      <div>
+         Кількість переглядів - <?php echo $oneNews['views'];?>
+      </div>
+            </div>
             <hr>
 
             <!-- Preview Image -->

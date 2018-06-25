@@ -15,10 +15,19 @@ class News {
         $db = Db::getConnection();
 
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
-                . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
+                . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, news.views AS views, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
+        
+        //Оновлення кількості переглядів новини
+         $updateView = "UPDATE news SET views = views + 1 WHERE id =".$id;
+       
+        // Получение и возврат результатов.
+        $update = $db->prepare($updateView);
+       
+        $update->execute();
+        
         return $newsItem;
     }
 
@@ -516,7 +525,8 @@ class News {
             $newsList[$i]['views'] = $row['views'];
             $i++;
         }
-        return $newsList;
+        
+               return $newsList;
     }
     
     
