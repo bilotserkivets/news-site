@@ -2,9 +2,9 @@
 <br/>
 
 <div class="col-md-8">
-    <a href="/admin"><button type="button" class="btn btn-primary"">Адмін панель</button></a>
+    <a href="/admin"><button type="button" class="btn btn-primary">Адмін панель</button></a>
     <a href="/admin/category"><button type="button" class="btn btn-primary">Управління категоріями</button></a>
-    <a href="/admin/category/create" "><i class="fa fa-plus"></i><button type="button" class="btn btn-success"> + Додати категорію</button></a>
+    <a href="/admin/category/create"><i class="fa fa-plus"></i><button type="button" class="btn btn-success"> + Додати категорію</button></a>
 
 
 

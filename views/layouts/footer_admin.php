@@ -3,7 +3,6 @@
     <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Сайт: Новини України 2018</p>
     </div>
-    <!-- /.container -->
 </footer>
 
 </body>

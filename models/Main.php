@@ -1,25 +1,25 @@
 <?php
 
 class Main {
-
+// Возвращает новость
     public static function getNewsListById($id) {
         $id = intval($id);
-
+        // Подключение к БД
         $db = Db::getConnection();
-
+        // Текст запроса к БД
         $result = $db->query("SELECT * FROM news WHERE id = " . $id);
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
         return $newsItem;
     }
-
+// Возвращает список новостей
     public static function getNewsList() {
-
+        // Подключение к БД
         $db = Db::getConnection();
 
         $newsList = [];
-
+        // Текст запроса к БД
         $result = $db->query('SELECT * FROM news');
 
         $i = 0;

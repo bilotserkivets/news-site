@@ -1,17 +1,18 @@
 <?php
 
-/**
- * Контроллер UserController
- */
 class UserController {
 
     /**
      * Action для страницы "Регистрация"
      */
     public function actionRegister() {
+        // Список последних новостей
         $lastNews = News::getLastNews();
+        // Список авторов с найбольшим количеством комментариев
         $topAuthors = Comment::getTopAutors();
+        // Список категорий
         $categories = Category::getCategoriesList();
+        // Количество просмотров новости
         $newsViews = News::getNumberViewsByNews();
         // Переменные для формы
         $name = false;
@@ -60,9 +61,13 @@ class UserController {
      * Action для страницы "Вход на сайт"
      */
     public function actionLogin() {
+        // Список последних новостей
         $lastNews = News::getLastNews();
+        // Список авторов с найбольшим количеством комментариев
         $topAuthors = Comment::getTopAutors();
+        // Список категорий
         $categories = Category::getCategoriesList();
+        // Количество просмотров новости
         $newsViews = News::getNumberViewsByNews();
         // Переменные для формы
         $email = false;

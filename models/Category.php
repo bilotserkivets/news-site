@@ -1,12 +1,16 @@
 <?php
 
 class Category {
-
+ /**
+     * Возвращает массив категорий  <br/>
+     * @return array <p>Массив категорий</p>
+     */
     public static function getCategoriesList() {
+        // Подключение к БД
         $db = Db::getConnection();
 
         $categoryList = [];
-
+        // Запрос к БД
         $result = $db->query('SELECT id, title, cat_name FROM category');
 
         $i = 0;

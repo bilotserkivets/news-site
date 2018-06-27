@@ -1,5 +1,5 @@
 <?php
-
+// Параметры подключения к базе данных
 return [
     'host' => 'localhost',
     'dbname' => 'news-site',

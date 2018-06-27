@@ -4,27 +4,28 @@ class News {
 
     const SHOW_BY_DEFAULT = 5;
 
-    /*
-     * Вибір однієї новини категорії
+    /* 
+     * Возвращает одну новость из определенной категории и 
+     * обновлвение количества просмотров новости
      */
-
     public static function getNewsListById($category, $id) {
 
         $id = intval($id);
-
+        // Соедининие с БД
         $db = Db::getConnection();
-
+        // Текст запроса к базе данных
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, news.views AS views, category.cat_name AS cat_name FROM news LEFT JOIN category ON news.id = '$id' AND category.cat_name = '$category'");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         $newsItem = $result->fetch();
         
-        //Оновлення кількості переглядів новини
-         $updateView = "UPDATE news SET views = views + 1 WHERE id =".$id;
+        //Обновление количества просмотров новости
+         $updateView = "UPDATE news SET views = views + 1 WHERE id =:id";
        
-        // Получение и возврат результатов.
+        // Возвращение и получение результатов
         $update = $db->prepare($updateView);
+        $update->bindParam(':id', $id, PDO::PARAM_INT);
        
         $update->execute();
         
@@ -32,15 +33,15 @@ class News {
     }
 
     /*
-     * Вибір всіх новин категорії Політика
+     * Выбор всех новостей категории Политика
      */
 
     public static function getNewsPolitika($count = self::SHOW_BY_DEFAULT) {
-
+        // Соедининие с БД
         $db = Db::getConnection();
 
         $newsList = [];
-
+        // Подготовленый запрос к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
                 . "FROM news JOIN category ON category.cat_name = 'politika' AND category.id = news.category_id ORDER BY id DESC LIMIT " . $count);
@@ -61,15 +62,15 @@ class News {
     }
 
     /*
-     * Вибір всіх новин категорії Економіка
+     * Возвращает все новости с категории Экономика
      */
 
     public static function getNewsEkonomika($count = self::SHOW_BY_DEFAULT) {
-
+        // Соедининие с БД
         $db = Db::getConnection();
 
         $newsList = [];
-
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
                 . "FROM news JOIN category ON category.cat_name = 'ekonomika' AND category.id = news.category_id ORDER BY id DESC LIMIT " . $count);
@@ -91,15 +92,15 @@ class News {
     }
 
     /*
-     * Вибір всіх новин категорії Спорт
+     * Возвращает все новости с категории Спорт
      */
 
     public static function getNewsSport($count = self::SHOW_BY_DEFAULT) {
-
+        // Соедининие с БД
         $db = Db::getConnection();
 
         $newsList = [];
-
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
                 . "FROM news JOIN category ON category.cat_name = 'sport' AND category.id = news.category_id ORDER BY id DESC LIMIT " . $count);
@@ -121,33 +122,33 @@ class News {
     }
 
     /**
-     * Удаляет новину с вказанним id
+     * Удаляет новость с вказанним id
      * @param integer $id <p>id товару</p>
-     * @return boolean <p>Результат виконаня методу</p>
+     * @return boolean <p>Результат выполнения метода</p>
      */
     public static function deleteNewsById($id) {
-        // Соединение с БД
+        // Соедининие с БД
         $db = Db::getConnection();
 
         // Текст запроса к БД
         $sql = 'DELETE FROM news WHERE id = :id';
 
-        // Получение и возврат результатов. Используется подготовленный запрос
+        // Возврат и получение результатов. Используется подготовлвеный запрос
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         return $result->execute();
     }
 
     /*
-     * Вибір всіх новин категорії Технології
+     * Возвращаен все новости с категории Технологии
      */
 
     public static function getNewsTehnology($count = self::SHOW_BY_DEFAULT) {
-
+        // Соедининие с БД
         $db = Db::getConnection();
 
         $newsList = [];
-
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
                 . "FROM news JOIN category ON category.cat_name = 'tehnology' AND category.id = news.category_id ORDER BY id DESC LIMIT " . $count);
@@ -169,7 +170,7 @@ class News {
     }
 
     /*
-     * Список новин у вибраній категорії
+     * Возвращает список новостей с определенной категории
      */
 
     public static function getNewsCategory($category = false, $page = 1) {
@@ -177,14 +178,10 @@ class News {
         $limit = News::SHOW_BY_DEFAULT;
         $page = intval($page);
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
-
+        
+        // Соединение с БД
         $db = Db::getConnection();
-
-
-        /* $sql = 'SELECT * FROM news '
-          . 'WHERE cat_name = :category '
-          . 'ORDER BY id ASC LIMIT :limit OFFSET :offset';
-         */
+        // Текст запроса к БД
         $sql = "SELECT news.id AS id, news.title AS title, news.category_id AS category_id, news.pubdate AS pubdate, "
                 . "news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name, category.title AS category_title FROM news "
                 . "JOIN category ON category.cat_name = :category AND category.id = news.category_id ORDER BY id DESC LIMIT :limit OFFSET :offset";
@@ -194,10 +191,8 @@ class News {
         $result->bindParam(':limit', $limit, PDO::PARAM_INT);
         $result->bindParam(':offset', $offset, PDO::PARAM_INT);
 
-        // Выполнение коменды
+        // Выполнение команды
         $result->execute();
-
-
 
         $i = 0;
         $newsCategory = [];
@@ -215,27 +210,17 @@ class News {
         }
         return $newsCategory;
     }
-
-    /*
-     * Отримання id категорії
-     */
-    /* public static function getIdCategory($category) {
-      $db = Db::getConnection();
-
-      $result = $db->query("SELECT id FROM news WHERE title = " . $category);
-      $result->setFetchMode(PDO::FETCH_ASSOC);
-
-      $catId = $result->fetch();
-      return $catId;
-
-      } */
-
+/*
+ * Возвращает список новостей с определенной категории
+ */   
     public static function getNewsByCategory($categoryId = false) {
 
         if ($categoryId) {
+            // Соедининие с БД
             $db = Db::getConnection();
 
             $news = [];
+            // Текст запрос к БД
             $result = $db->query("SELECT id, category_id, title, content, pubdate FROM news WHERE category_id = " . $categoryId);
 
             $i = 0;
@@ -253,12 +238,14 @@ class News {
     }
 
     /*
-     * Виведення тегів новини
+     * Возвращает список тэгов нововти
      */
 
     public static function getTagsByNews($id) {
+        // Соедининие с БД
         $db = Db::getConnection();
         $tagsList = [];
+        // Текст запроса к БД
         $result = $db->query("SELECT tags.tag, tags.id, COUNT(news_tags.tagid) AS news_count" .
                 " FROM news_tags LEFT JOIN tags ON news_tags.tagid=tags.id" .
                 " WHERE news_tags.newsid=" . $id .
@@ -273,12 +260,14 @@ class News {
     }
 
     /*
-     * Виведення всих тегів
+     * Возвращает список всех тэгов
      */
 
     public static function getTags() {
+        // Соединение с БД
         $db = Db::getConnection();
         $tagsList = [];
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id, news.title, news_tags.tagid, news_tags.newsid FROM news LEFT JOIN news_tags ON news.id = news_tags.newsid");
         $i = 0;
         while ($row = $result->fetch()) {
@@ -288,12 +277,15 @@ class News {
         }
         return $tagsList;
     }
-
+/*
+ * Возвращает новости с определенным тэгом
+ */
     public static function getNewsByTag($idTag) {
-
+        // Соедининие с БД
         $db = Db::getConnection();
 
         $newsTag = [];
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name "
                 . "FROM news JOIN category JOIN news_tags ON news_tags.tagid = " . $idTag . "  AND news.category_id = category.id AND news.id = news_tags.newsid");
@@ -303,7 +295,6 @@ class News {
         while ($row = $result->fetch()) {
 
             $newsTag[$i]['id'] = $row['id'];
-            //$newsTag[$i]['cat_name'] = $row['cat_name'];
             $newsTag[$i]['title'] = $row['title'];
             $newsTag[$i]['content'] = $row['content'];
             $newsTag[$i]['pubdate'] = $row['pubdate'];
@@ -319,10 +310,10 @@ class News {
      * @return array <p>Массив с новостями</p>
      */
     public static function getLastNews($count = self::SHOW_BY_DEFAULT) {
-        // Соединение с БД
+        // Соедининие с БД
         $db = Db::getConnection();
 
-        // Получение и возврат результатов
+        // Текст запроса к БД
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, "
                 . "DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name FROM news "
                 . " LEFT JOIN category ON category.id = news.category_id ORDER BY id DESC LIMIT " . $count);
@@ -341,9 +332,9 @@ class News {
     }
 
     /**
-     * Возвращает путь к изображению
+     * Повертає шлях до зображення
      * @param integer $id
-     * @return string <p>Путь к изображению</p>
+     * @return string <p>Шлях до зображення</p>
      */
     public static function getImage($id) {
         // Название изображения-пустышки
@@ -357,13 +348,13 @@ class News {
 
         return $pathToNewsImage;
     }
-
+    
+// Возвращаеи список новостей в определенной категории
     public static function getTotalNewsInCategory($category) {
-
+        // Соединение с БД
         $db = Db::getConnection();
 
         // Текст запроса к БД
-        // $sql = "SELECT count(id) AS count FROM news JOIN category WHERE cat_name = :category";
         $sql = "SELECT count(news.id) AS count FROM news JOIN category ON news.category_id = category.id WHERE category.cat_name = :category";
 
         // Используется подготовленный запрос
@@ -387,7 +378,6 @@ class News {
         $db = Db::getConnection();
 
         // Получение и возврат результатов
-        //$result = $db->query('SELECT id, cat_name, author_id, title, content, pubdate FROM news ORDER BY id ASC');
         $result = $db->query("SELECT news.id AS id, news.title AS title, news.category_id AS category_id, DATE_FORMAT(news.pubdate, '%H:%i %d.%m.%Y') AS pubdate, "
                 . "news.author_id AS author_id, news.content AS content, category.cat_name AS cat_name, category.title AS cat_title FROM news "
                 . "LEFT JOIN category ON news.category_id = category.id ORDER BY id ASC");
@@ -482,7 +472,9 @@ class News {
         // Получение и возврат результатов
         return $result->fetch();
     }
-
+/*
+ * Возвращает список всех тэгов
+ */
     public static function addTags($tag) {
 
         // Соединение с БД
@@ -504,7 +496,9 @@ class News {
         // Иначе возвращаем 0
         return 0;
     }
-
+/*
+ * Возвращает список новостей по количеству просмотров
+ */
     public static function getNumberViewsByNews($count = self::SHOW_BY_DEFAULT) {
         // Соединение с БД
         $db = Db::getConnection();
@@ -528,21 +522,4 @@ class News {
         
                return $newsList;
     }
-    
-    
-    /* public static function getTagsByOneNews() {
-      // Соединение с БД
-      $db = Db::getConnection();
-
-      $result = $db->query("tags.tag AS tags FROM tags JOIN news JOIN news_tags ON news.id = news_tags.newsid AND tags.id = news_tags.tagid");
-
-      $tagsNews = [];
-      $i = 0;
-      while ($row = $result->fetch()) {
-      $tagsNews[$i]['tags'] = $row['tags'];
-
-      $i++;
-      }
-      return $tagsNews;
-      } */
 }

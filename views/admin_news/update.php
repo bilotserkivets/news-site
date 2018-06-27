@@ -2,7 +2,7 @@
 <br/>
 
 <div class="col-md-8">
-    <a href="/admin"><button type="button" class="btn btn-primary"">Адмін панель</button></a>
+    <a href="/admin"><button type="button" class="btn btn-primary">Адмін панель</button></a>
     <a href="/admin/news"><button type="button" class="btn btn-primary">Управління новинами</button></a>
     <a href="#"><button type="button" class="btn btn-primary">Управління категоріями</button></a>
     <br/>

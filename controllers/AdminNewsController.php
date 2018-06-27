@@ -14,7 +14,7 @@ class AdminNewsController extends AdminBase {
         // Проверка доступа
         self::checkAdmin();
 
-        // Получаєм список новостей
+        // Получаем список новостей
         $newsList = News::getNewsList();
         $author = User::getUsers();
 

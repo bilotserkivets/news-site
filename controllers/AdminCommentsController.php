@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Apach
- * Date: 08.05.2018
- * Time: 22:55
- */
 class AdminCommentsController extends AdminBase {
 
     /**
@@ -19,7 +13,7 @@ class AdminCommentsController extends AdminBase {
         // Получаем список комментариев
         $commentsList = Comment::getCommentsListAdmin();
         $author = User::getUsers();
-        // Подключаєм вид
+        // Подключаем вид
         require_once(ROOT . '/views/admin_comments/index.php');
         return true;
     }
